@@ -55,7 +55,7 @@ requests==2.32.3
 setuptools==75.8.0
 six==1.17.0
 stack-data==0.6.3
--e file:///C:/Users/milto/Documents/stonks
+-e .
 tornado==6.4.2
 traitlets==5.14.3
 typing-extensions==4.12.2
