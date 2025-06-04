@@ -1,24 +1,19 @@
 import streamlit as st
+from ui.features.button import button
+
 from backend.features.stonk import Stonk
 from backend.features.stonk_graph import StonkGraph
 
 
-class ChooseStonk:
-    def show_data(self):
+class StonkAnalysis:
+    def __init__(self, choice: str):
+        self.choice = choice
 
-        choice = st.text_input(  "What stonk do you want to analyse?")
-        if choice:
-            stonk = Stonk(choice)
-            stonk_graph = StonkGraph(choice)
+    def show_table(self):
+        stonk = Stonk(self.choice)
+        if stonk:
+            st.dataframe(stonk.df)
 
-            if stonk:
-                st.dataframe(stonk.df)
-
-            if "show_graph" not in st.session_state:
-                st.session_state.show_graph = False
-
-            if st.button("Graph"):
-                st.session_state.show_graph = not st.session_state.show_graph
-
-            if st.session_state.show_graph:
-                st.plotly_chart(stonk_graph.date_close())
+    def show_graph(self):
+        stonk_graph = StonkGraph(self.choice)
+        button("Graph", stonk_graph.date_close, "date_close")
