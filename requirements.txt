@@ -37,6 +37,7 @@ jsonschema-specifications==2025.4.1
 jupyter-client==8.6.3
 jupyter-core==5.7.2
 kiwisolver==1.4.8
+lxml==5.4.0
 markupsafe==3.0.2
 matplotlib==3.10.0
 matplotlib-inline==0.1.7
@@ -74,17 +75,19 @@ pyyaml==6.0.2
 pyzmq==26.2.1
 referencing==0.36.2
 requests==2.32.3
+requests-futures==1.0.2
 rpds-py==0.25.1
 setuptools==75.8.0
 six==1.17.0
 smmap==5.0.2
 soupsieve==2.7
 stack-data==0.6.3
--e .
+-e file:///C:/Users/milto/Documents/stonks
 streamlit==1.45.1
 tenacity==9.1.2
 toml==0.10.2
 tornado==6.4.2
+tqdm==4.67.1
 traitlets==5.14.3
 typing-extensions==4.12.2
 tzdata==2025.1
@@ -93,4 +96,5 @@ virtualenv==20.29.2
 watchdog==6.0.0
 wcwidth==0.2.13
 websockets==15.0.1
+yahooquery==2.4.1
 yfinance==0.2.61
