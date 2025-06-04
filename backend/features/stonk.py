@@ -13,4 +13,4 @@ class Stonk:
     def _get_data(self, stonk: str, period: str = "2y", interval: str = "1d"):
         symbol = self._get_symbol(stonk)
         data = yf.Ticker(symbol)
-        self.df = data.history(period=period, interval=interval)
+        return data.history(period=period, interval=interval)
