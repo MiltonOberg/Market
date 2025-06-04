@@ -55,6 +55,7 @@ pathspec==0.12.1
 peewee==3.18.1
 pillow==11.1.0
 platformdirs==4.3.6
+plotly==6.1.2
 pre-commit==4.1.0
 prompt-toolkit==3.0.50
 protobuf==6.31.1
