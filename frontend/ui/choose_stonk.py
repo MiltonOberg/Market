@@ -1,8 +1,8 @@
 import streamlit as st
 from ui.components.button import button
 
-from backend.features.stonk import Stonk
-from backend.features.stonk_graph import StonkGraph
+from backend.components.stonk import Stonk
+from backend.components.stonk_graph import StonkGraph
 
 
 class StonkAnalysis:
