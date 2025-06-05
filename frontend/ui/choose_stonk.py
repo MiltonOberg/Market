@@ -1,5 +1,5 @@
 import streamlit as st
-from ui.features.button import button
+from ui.componants.button import button
 
 from backend.features.stonk import Stonk
 from backend.features.stonk_graph import StonkGraph
