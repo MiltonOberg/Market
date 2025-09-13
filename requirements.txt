@@ -101,3 +101,6 @@ wcwidth==0.2.13
 websockets==15.0.1
 yahooquery==2.4.1
 yfinance==0.2.65
+black==25.1.0
+mypy-extensions==1.1.0
+pathspec==0.12.1
