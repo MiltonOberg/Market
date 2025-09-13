@@ -15,5 +15,5 @@ setup(
     packages=find_packages(
         exclude=("explorations", "test"), include=["backend", "utils", "features"]
     ),
-    #entry_points={"console_scripts": ["dashboard = utils.run_dashboard:run_dashboard"]},
+    # entry_points={"console_scripts": ["dashboard = utils.run_dashboard:run_dashboard"]},
 )
