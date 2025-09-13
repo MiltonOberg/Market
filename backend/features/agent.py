@@ -48,7 +48,13 @@ class Agent:
     ):
         return self.model.predict(self.test_data, verbose=0)
 
-    def predict_feature(self, days=7):
+    def predict_feature(self, market, days=7):
+        difs = [high - low for high, low in zip(market.df["High"], market.df["Low"])]
+        volumes = [
+            np.random.randint(market.df["Volume"].min(), market.df["Volume"].max())
+            for i in range(days)
+        ]
+
         latest_day = self.X.iloc[-1].values.reshape(1, -1)
 
         latest_scaled = self.standard_scaler.transform(latest_day)
@@ -59,10 +65,10 @@ class Agent:
             price = self.model.predict(latest_scaled)
             new_predictions.append(price)
 
-            new_input = latest_day.copy()
-            new_input[0][0] = price
+            high = np.random.uniform(latest_day[0][1], latest_day[0][1] + difs[i])
+            low = np.random.uniform(latest_day[0][2], latest_day[0][2] - difs[i])
+            latest_day = np.array([[price[0][0], high, low, volumes[i]]])
 
-            latest_scaled = self.standard_scaler.transform(new_input)
-            latest_day = new_input
+            latest_scaled = self.standard_scaler.transform(latest_day)
 
         return np.array(new_predictions).flatten()
