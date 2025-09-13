@@ -87,7 +87,7 @@ setuptools==80.9.0
 six==1.17.0
 soupsieve==2.7
 stack-data==0.6.3
--e file:///C:/Users/milto/Documents/stonks
+-e .
 tensorboard==2.19.0
 tensorboard-data-server==0.7.2
 tensorflow==2.19.0
