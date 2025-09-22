@@ -1,7 +1,7 @@
 import streamlit as st
 from ui.components.button import button
 
-from backend.components.stonk import Stonk
+from backend.components.stock import Stonk
 from backend.components.stonk_graph import StonkGraph
 
 

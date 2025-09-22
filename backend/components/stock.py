@@ -2,14 +2,14 @@ import yfinance as yf
 from yahooquery import search
 
 
-class Stonk:
+class Stock:
     def __init__(self, stonk: str):
         self.df = self._get_data(stonk)
 
     def _get_symbol(self, stonk: str):
         try:
             result = search(stonk)
-            return result["quotes"][1]["symbol"]
+            return result["quotes"][0]["symbol"]
         except Exception as e:
             raise ValueError(f"Error fetching data for {stonk}: {e}")
 
@@ -17,6 +17,6 @@ class Stonk:
         symbol = self._get_symbol(stonk)
         try:
             data = yf.Ticker(symbol)
-            return data.history(period=period, interval=interval)[::-1]
+            return data.history(period=period, interval=interval)
         except Exception as e:
             raise ValueError(f"Error fetching data for {stonk}: {e}")

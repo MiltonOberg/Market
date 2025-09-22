@@ -1,6 +1,6 @@
 import plotly.express as px
 
-from backend.components.stonk import Stonk
+from backend.components.stock import Stonk
 
 
 class StonkGraph:
