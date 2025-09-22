@@ -15,6 +15,10 @@ class Agent:
         self.model = self._create_model()
         self.train_data = None
         self.test_data = None
+        self.X_train = None
+        self.y_train = None
+        self.X_test = None
+        self.y_test = None
 
         self.standard_scaler = StandardScaler()
 
@@ -29,16 +33,16 @@ class Agent:
         return model
 
     def scaler(self, X, y):
-        X_train, X_test, y_train, y_test = train_test_split(
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
             X, y, test_size=0.2, shuffle=False
         )
-        X_train_scaled = self.standard_scaler.fit_transform(X_train)
-        X_test_scaled = self.standard_scaler.transform(X_test)
-        self.train_data = (X_train_scaled, y_train)
-        self.test_data = (X_test_scaled, y_test)
+        X_train_scaled = self.standard_scaler.fit_transform(self.X_train)
+        X_test_scaled = self.standard_scaler.transform(self.X_test)
+        self.train_data = (X_train_scaled, self.y_train)
+        self.test_data = (X_test_scaled, self.y_test)
 
-    def train(self, X, y):
-        self.scaler(X, y)
+    def train(self):
+        self.scaler(self.X, self.y)
         self.model.fit(
             self.train_data[0], self.train_data[1], epochs=100, batch_size=32, verbose=1
         )
@@ -48,7 +52,7 @@ class Agent:
     ):
         return self.model.predict(self.test_data, verbose=0)
 
-    def predict_feature(self, market, days=7):
+    def predict_future(self, market, days=7):
         difs = [high - low for high, low in zip(market.df["High"], market.df["Low"])]
         volumes = [
             np.random.randint(market.df["Volume"].min(), market.df["Volume"].max())
