@@ -3,7 +3,7 @@ import plotly.express as px
 from backend.components.stock import Stock
 
 
-class StonkGraph:
+class StockGraph:
     def __init__(self, stonk: str):
         self.df = Stock(stonk).df
 
