@@ -1,5 +1,6 @@
 import streamlit as st
-from ui.choose_stonk import StonkAnalysis
+
+from frontend.ui.choose_stock import StockAnalysis
 
 
 def main():
@@ -12,7 +13,7 @@ def main():
         st.title("Stonk Analysis")
         choice = st.text_input("What stonk do you want to analyse?")
         if choice:
-            stonk_analysis = StonkAnalysis(choice=choice)
+            stonk_analysis = StockAnalysis(choice=choice)
             stonk_analysis.show_table()
             stonk_analysis.show_graph()
 

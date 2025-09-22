@@ -1,19 +1,19 @@
 import streamlit as st
 from ui.components.button import button
 
-from backend.components.stock import Stonk
-from backend.components.stonk_graph import StonkGraph
+from backend.components.stock import Stock
+from backend.components.stock_graph import StockGraph
 
 
-class StonkAnalysis:
+class StockAnalysis:
     def __init__(self, choice: str):
         self.choice = choice
 
     def show_table(self):
-        stonk = Stonk(self.choice)
+        stonk = Stock(self.choice)
         if stonk:
             st.dataframe(stonk.df)
 
     def show_graph(self):
-        stonk_graph = StonkGraph(self.choice)
+        stonk_graph = StockGraph(self.choice)
         button("Graph", stonk_graph.date_close, "date_close")
