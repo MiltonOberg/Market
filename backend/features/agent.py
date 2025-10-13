@@ -5,11 +5,12 @@ from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 
+from backend.components.stock import Stock
+
 
 class Agent:
-    def __init__(self, X, y):
-        self.X = X
-        self.y = y
+    def __init__(self, stock: Stock):
+        self.X, self.y = stock.df.drop(columns=["Close"]), stock.df["Close"]
         self.input_shape = self.X.shape[1:]
         self.learning_rate = 0.001
         self.model = self._create_model()
