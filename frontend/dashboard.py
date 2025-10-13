@@ -12,7 +12,7 @@ def main():
 
     if page == "Stock Analysis":
         st.title("Stock Analysis")
-        choice = st.text_input("What stonk do you want to analyse?", value="")
+        choice = st.text_input("What stonk do you want to analyse?", key="analysis")
         if choice:
             stonk_analysis = StockAnalysis(choice=choice)
             stonk_analysis.show_table()
@@ -20,8 +20,8 @@ def main():
 
     if page == "AI Model":
         st.title("AI Model")
-        days = st.slider("Days to predict", min_value=1, max_value=30)
-        choice = st.text_input("What stonk do you want to analyse?", value="")
+        days = st.slider("Days to predict", min_value=0, max_value=30)
+        choice = st.text_input("What stonk do you want to analyse?", key="ai")
 
         if choice:
             preds = PredictStock(choice=choice).predict_days(days=days)
