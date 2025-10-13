@@ -4,8 +4,8 @@ from backend.components.stock import Stock
 
 
 class StockGraph:
-    def __init__(self, stonk: str):
-        self.df = Stock(stonk).df
+    def __init__(self, choice: str = None, stock: Stock = None):
+        self.df = Stock(choice).df if choice else stock.df
 
     def date_close(self, year: int = None, month: int = None):
         if year is not None or month is not None:

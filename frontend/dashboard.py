@@ -1,11 +1,11 @@
 import streamlit as st
 
-from frontend.ui.choose_stock import StockAnalysis
+from frontend.ui.stock_analysis import StockAnalysis
 
 
 def main():
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio(" Navigation", ["Home", "Stonk Analysis"])
+    page = st.sidebar.radio(" Navigation", ["Home", "Stock Analysis", "AI Model"])
     if page == "Home":
         st.title("Hello World!")
 
@@ -16,6 +16,9 @@ def main():
             stonk_analysis = StockAnalysis(choice=choice)
             stonk_analysis.show_table()
             stonk_analysis.show_graph()
+
+    if page == "AI Model":
+        st.title("AI Model")
 
 
 if __name__ == "__main__":

@@ -6,13 +6,12 @@ from backend.components.stock_graph import StockGraph
 
 
 class StockAnalysis:
-    def __init__(self, choice: str):
-        self.choice = choice
+    def __init__(self, choice: str = None, stock: Stock = None):
+        self.stock = Stock(self.choice) if choice else stock
 
     def show_table(self):
-        stonk = Stock(self.choice)
-        if stonk:
-            st.dataframe(stonk.df)
+        if self.stock:
+            st.dataframe(self.stock.df)
 
     def show_graph(self):
         stonk_graph = StockGraph(self.choice)
