@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 import streamlit as st
 from ui.components.button import button
 
@@ -6,13 +8,19 @@ from backend.components.stock_graph import StockGraph
 
 
 class StockAnalysis:
-    def __init__(self, choice: str = None, stock: Stock = None):
-        self.stock = Stock(choice) if choice else stock
+    def __init__(self, choice: str):
+        self.choice = choice
 
     def show_table(self):
-        if self.stock:
-            st.dataframe(self.stock.df)
+        df = None
+        if isinstance(self.choice, str):
+            df = Stock(self.choice).df
+        if isinstance(self.choice, Stock):
+            df = self.choice.df
+        if isinstance(self.choice, np.ndarray):
+            df = pd.DataFrame(self.choice, columns=["Close"])
+        st.dataframe(df)
 
     def show_graph(self):
-        stonk_graph = StockGraph(self.stock)
+        stonk_graph = StockGraph(self.choice)
         button("Graph", stonk_graph.date_close, "date_close")

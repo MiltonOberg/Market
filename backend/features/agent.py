@@ -10,7 +10,11 @@ from backend.components.stock import Stock
 
 class Agent:
     def __init__(self, stock: Stock):
-        self.X, self.y = stock.df.drop(columns=["Close"]), stock.df["Close"]
+        """Does not take Dividens and Stock Splits into account for now."""
+        self.X, self.y = (
+            stock.df.drop(columns=["Close", "Dividends", "Stock Splits"]),
+            stock.df["Close"],
+        )
         self.input_shape = self.X.shape[1:]
         self.learning_rate = 0.001
         self.model = self._create_model()

@@ -3,20 +3,20 @@ from yahooquery import search
 
 
 class Stock:
-    def __init__(self, stonk: str):
-        self.df = self._get_data(stonk)
+    def __init__(self, stock: str):
+        self.df = self._get_data(stock)
 
-    def _get_symbol(self, stonk: str):
+    def _get_symbol(self, stock: str):
         try:
-            result = search(stonk)
+            result = search(stock)
             return result["quotes"][0]["symbol"]
         except Exception as e:
-            raise ValueError(f"Error fetching data for {stonk}: {e}")
+            raise ValueError(f"Error fetching data for {stock}: {e}")
 
-    def _get_data(self, stonk: str, period: str = "2y", interval: str = "1d"):
-        symbol = self._get_symbol(stonk)
+    def _get_data(self, stock: str, period: str = "2y", interval: str = "1d"):
+        symbol = self._get_symbol(stock)
         try:
             data = yf.Ticker(symbol)
             return data.history(period=period, interval=interval)
         except Exception as e:
-            raise ValueError(f"Error fetching data for {stonk}: {e}")
+            raise ValueError(f"Error fetching data for {stock}: {e}")
