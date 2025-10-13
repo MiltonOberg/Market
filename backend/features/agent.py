@@ -45,7 +45,7 @@ class Agent:
     def train(self):
         self.scaler(self.X, self.y)
         self.model.fit(
-            self.train_data[0], self.train_data[1], epochs=100, batch_size=32, verbose=1
+            self.train_data[0], self.train_data[1], epochs=100, batch_size=32, verbose=0
         )
 
     def predict(
