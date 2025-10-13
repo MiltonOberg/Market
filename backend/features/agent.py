@@ -5,11 +5,16 @@ from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 
+from backend.components.stock import Stock
+
 
 class Agent:
-    def __init__(self, X, y):
-        self.X = X
-        self.y = y
+    def __init__(self, stock: Stock):
+        """Does not take Dividens and Stock Splits into account for now."""
+        self.X, self.y = (
+            stock.df.drop(columns=["Close", "Dividends", "Stock Splits"]),
+            stock.df["Close"],
+        )
         self.input_shape = self.X.shape[1:]
         self.learning_rate = 0.001
         self.model = self._create_model()
@@ -44,7 +49,7 @@ class Agent:
     def train(self):
         self.scaler(self.X, self.y)
         self.model.fit(
-            self.train_data[0], self.train_data[1], epochs=100, batch_size=32, verbose=1
+            self.train_data[0], self.train_data[1], epochs=100, batch_size=32, verbose=0
         )
 
     def predict(
