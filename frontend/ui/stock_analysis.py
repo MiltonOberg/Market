@@ -7,12 +7,12 @@ from backend.components.stock_graph import StockGraph
 
 class StockAnalysis:
     def __init__(self, choice: str = None, stock: Stock = None):
-        self.stock = Stock(self.choice) if choice else stock
+        self.stock = Stock(choice) if choice else stock
 
     def show_table(self):
         if self.stock:
             st.dataframe(self.stock.df)
 
     def show_graph(self):
-        stonk_graph = StockGraph(self.choice)
+        stonk_graph = StockGraph(self.stock)
         button("Graph", stonk_graph.date_close, "date_close")
