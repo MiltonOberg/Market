@@ -19,7 +19,7 @@ class StockAnalysis:
             df = self.choice.df
         if isinstance(self.choice, np.ndarray):
             df = pd.DataFrame(self.choice, columns=["Close"])
-        st.dataframe(df)
+        st.dataframe(df[::-1])
 
     def show_graph(self):
         stonk_graph = StockGraph(self.choice)
