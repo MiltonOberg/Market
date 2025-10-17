@@ -2,6 +2,7 @@ import streamlit as st
 
 from backend.features.predict_stock import PredictStock
 from frontend.ui.stock_analysis import StockAnalysis
+from utils.period_options import PERIOD_MAP
 
 
 def main():
@@ -13,8 +14,13 @@ def main():
     if page == "Stock Analysis":
         st.title("Stock Analysis")
         choice = st.text_input("What stonk do you want to analyse?", key="analysis")
-        if choice:
-            stonk_analysis = StockAnalysis(choice=choice)
+        time = st.radio(
+            "What time frame would you like to see?",
+            [option for option in PERIOD_MAP.keys()],
+            horizontal=True,
+        )
+        if choice and time:
+            stonk_analysis = StockAnalysis(choice=choice, timeframe=PERIOD_MAP[time])
             stonk_analysis.show_table()
             stonk_analysis.show_graph()
 

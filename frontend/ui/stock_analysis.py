@@ -8,13 +8,14 @@ from backend.components.stock_graph import StockGraph
 
 
 class StockAnalysis:
-    def __init__(self, choice: str):
+    def __init__(self, choice: str, timeframe=None):
         self.choice = choice
+        self.timeframe = timeframe
 
     def show_table(self):
         df = None
         if isinstance(self.choice, str):
-            df = Stock(self.choice).df
+            df = Stock(self.choice, timeframe=self.timeframe).df
         if isinstance(self.choice, Stock):
             df = self.choice.df
         if isinstance(self.choice, np.ndarray):
