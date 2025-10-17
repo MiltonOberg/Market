@@ -13,12 +13,13 @@ def main():
 
     if page == "Stock Analysis":
         st.title("Stock Analysis")
-        choice = st.text_input("What stonk do you want to analyse?", key="analysis")
         time = st.radio(
             "What time frame would you like to see?",
             [option for option in PERIOD_MAP.keys()],
             horizontal=True,
         )
+        choice = st.text_input("What stonk do you want to analyse?", key="analysis")
+
         if choice and time:
             stonk_analysis = StockAnalysis(choice=choice, timeframe=PERIOD_MAP[time])
             stonk_analysis.show_table()
