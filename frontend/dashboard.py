@@ -1,6 +1,7 @@
 import streamlit as st
 
 from backend.features.predict_stock import PredictStock
+from frontend.style.read_css import read_css
 from frontend.ui.stock_analysis import StockAnalysis
 from utils.period_options import PERIOD_MAP
 
@@ -35,6 +36,8 @@ def main():
             stock_analysis = StockAnalysis(choice=preds)
             stock_analysis.show_table()
             stock_analysis.show_graph()
+
+    read_css()
 
 
 if __name__ == "__main__":
