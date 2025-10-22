@@ -13,7 +13,9 @@
 .stMain {
     background-color: var(--dark-navy);
 }
-
+.stAppHeader {
+    display: none;
+}
 
 /* Stock Analysis page*/
 
