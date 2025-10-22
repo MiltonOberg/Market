@@ -6,7 +6,9 @@
     --light-navy: #0D1B4C;
 
     --red: #EB5757;
+
     --green: #27AE60;
+    
     --yellow: #F2C94C;
 }
 /* All pages*/
@@ -14,7 +16,7 @@
     background-color: var(--dark-navy);
 }
 .stAppHeader {
-    display: none;
+    background-color: var(--dark-navy);
 }
 
 /* Stock Analysis page*/
