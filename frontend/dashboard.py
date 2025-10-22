@@ -7,6 +7,8 @@ from utils.period_options import PERIOD_MAP
 
 
 def main():
+    read_css()
+
     st.sidebar.title("Navigation")
     page = st.sidebar.radio(" Navigation", ["Home", "Stock Analysis", "AI Model"])
     if page == "Home":
@@ -36,8 +38,6 @@ def main():
             stock_analysis = StockAnalysis(choice=preds)
             stock_analysis.show_table()
             stock_analysis.show_graph()
-
-    read_css()
 
 
 if __name__ == "__main__":
