@@ -1,8 +1,26 @@
+:root {
+    --light-grey: #80808080;
+    --dark-grey: #31303080;
 
+    --dark-navy: #070730;
+    --light-navy: #0D1B4C;
+
+    --red: #EB5757;
+    --green: #27AE60;
+    --yellow: #F2C94C;
+}
+/* All pages*/
+.stMain {
+    background-color: var(--dark-navy);
+}
+
+/* Stock Analysis page*/
 div[data-testid="stElementContainer"]:has(div[role="radiogroup"][aria-label="What time frame would you like to see?"]){
-    background-color: #31303080 !important;
+    background-color: var(--light-navy);
     margin: 0;
 }
-.stMainBlockContainer {
-    background-color: #80808080 !important;
+
+.st-key-stock_analysis h2{
+    background-color: var(--light-navy);
 }
+
