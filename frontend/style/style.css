@@ -14,13 +14,13 @@
     background-color: var(--dark-navy);
 }
 
+
 /* Stock Analysis page*/
-div[data-testid="stElementContainer"]:has(div[role="radiogroup"][aria-label="What time frame would you like to see?"]){
-    background-color: var(--light-navy);
-    margin: 0;
-}
 
 .st-key-stock_analysis h2{
+    background-color: var(--dark-grey);
+}
+.st-key-stock_analysis {
     background-color: var(--light-navy);
 }
 
