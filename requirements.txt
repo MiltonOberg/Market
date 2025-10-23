@@ -128,3 +128,5 @@ wheel==0.45.1
 wrapt==1.17.3
 yahooquery==2.4.1
 yfinance==0.2.65
+flask==3.1.2
+itsdangerous==2.2.0
