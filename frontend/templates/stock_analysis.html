@@ -3,17 +3,22 @@
     <h1>Stock Analysis</h1>
     <form method = "POST" action="{{ url_for('stock_analysis.stock_analysis') }}">
 
-        <label for="stock_pick">Pick your stock: </label>
-        <input type="text" id="stock_pick" name="stock_pick" value= "{{stock_pick}}" required>
+        <label for="stock-pick">Pick your stock: </label>
+        <input type="text" id="stock-pick" name="stock-pick" value= "{{stock_pick}}" required>
         <button type="submit">Fetch data</button>
     </form>
 
-    <div id="plotly-analysis"></div>
+    <hr>
+        {{ table_html | safe }}
+    <hr/>
+
+    <div id="plotly-graph"></div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
 
     <script>
-        var graph = {{ graphJSON | safe }};
-        Plotly.plot("plotly-analysis", graph.data, graph.layout);
+        var graph = {{ json_graph | safe }};
+        Plotly.plot("plotly-graph", graph.data, graph.layout);
     </script>
 
 {% endblock %}

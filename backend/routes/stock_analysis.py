@@ -10,11 +10,15 @@ def stock_analysis():
     stock_pick = "saab"
 
     if request.method == "POST":
-        stock_pick = request.form.get("stock_pick", stock_pick)
+        stock_pick = request.form.get("stock-pick", stock_pick)
 
     analysis = StockAnalysis(choice=stock_pick)
     graph = analysis.get_graph()
+    table_data = analysis.get_table()
 
     return render_template(
-        "stock_analysis.html", graphJSON=graph, stock_pick=stock_pick
+        "stock_analysis.html",
+        json_graph=graph,
+        stock_pick=stock_pick,
+        table_html=table_data,
     )

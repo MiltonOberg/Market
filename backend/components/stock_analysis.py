@@ -1,6 +1,5 @@
 import json
 
-import pandas as pd
 from plotly.utils import PlotlyJSONEncoder
 
 from backend.components.stock import Stock
@@ -20,8 +19,10 @@ class StockAnalysis:
         self.stock = Stock(stock=choice, timeframe=timeframe, interval=interval)
 
     def get_table(self):
-        df = pd.DataFrame(self.stock.df, columns=["Close"])
-        return df
+        df = self.stock.df
+
+        json_table = df.to_html(classes="table table-striped table-bordered", border=0)
+        return json_table
 
     def get_graph(self):
         fig = StockGraph(choice=self.stock)
