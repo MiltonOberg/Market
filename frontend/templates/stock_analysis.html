@@ -1,5 +1,19 @@
 {% extends "base.html" %} {% block content %}
 
     <h1>Stock Analysis</h1>
+    <form method = "POST" action="{{ url_for('stock_analysis.stock_analysis') }}">
+
+        <label for="stock_pick">Pick your stock: </label>
+        <input type="text" id="stock_pick" name="stock_pick" value= "{{stock_pick}}" required>
+        <button type="submit">Fetch data</button>
+    </form>
+
+    <div id="plotly-analysis"></div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script>
+        var graph = {{ graphJSON | safe }};
+        Plotly.plot("plotly-analysis", graph.data, graph.layout);
+    </script>
 
 {% endblock %}

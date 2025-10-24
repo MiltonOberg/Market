@@ -3,7 +3,9 @@ from yahooquery import search
 
 
 class Stock:
-    def __init__(self, stock: str, timeframe: str = "2y", interval: str = "1d"):
+    def __init__(
+        self, stock: str = "saab", timeframe: str = "2y", interval: str = "1d"
+    ):
         self.timeframe = timeframe
         self.interval = interval
         self.df = self._get_data(stock)

@@ -1,8 +1,8 @@
 import streamlit as st
 
+from backend.components.stock_analysis import StockAnalysis
 from backend.features.predict_stock import PredictStock
 from frontend.style.read_css import read_css
-from frontend.ui.stock_analysis import StockAnalysis
 from utils.period_options import PERIOD_MAP
 
 
