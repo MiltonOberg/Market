@@ -9,7 +9,9 @@
     </form>
 
     <hr>
-        {{ table_html | safe }}
+        <div class="scroll-wrapper">
+            {{ table_html | safe }}
+        </div>
     <hr/>
 
     <div id="plotly-graph"></div>
