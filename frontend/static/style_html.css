@@ -1,0 +1,33 @@
+:root {
+    --light-grey: #80808080;
+    --dark-grey: #31303080;
+
+    --dark-navy: #070730;
+    --light-navy: #0D1B4C;
+
+    --red: #EB5757;
+
+    --green: #27AE60;
+    
+    --yellow: #F2C94C;
+}
+main {
+    height: 100vh;
+    margin-top: 0;
+    margin-left: 175px;
+    background-color: var(--light-navy);
+    color: white;
+}
+
+body {
+    margin: 0;
+}
+
+.sidebar {
+    width: 175px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--dark-navy);
+}
