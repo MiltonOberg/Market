@@ -2,4 +2,22 @@
 
     <h1>AI Model</h1>
 
+    <form method = "POST" action="{{ url_for('ai_model.ai_model') }}">
+        <label for="stock-pick">Pick your stock: </label>
+        <input type="text" id="stock-pick" name="stock-pick" value= "{{stock_pick}}" required>
+
+        <label for = "period-pick"> Select a prediction period </label>
+        <input type = "range" id = "period-pick" name="period-pick" min="1" max="30" value={{"period_pick"}} required>
+        <button type="submit"> Predict </button>
+    </form>
+
+    <div id="plotly-graph"></div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script>
+        var graph = {{ json_graph | safe }};
+        Plotly.plot("plotly-graph", graph.data, graph.layout);
+    </script>
+
+
 {% endblock %}

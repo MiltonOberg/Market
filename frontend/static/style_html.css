@@ -13,7 +13,6 @@
 }
 main {
     height: 100vh;
-    margin-top: 0;
     margin-left: 175px;
     background-color: var(--light-navy);
     color: white;
@@ -23,6 +22,11 @@ body {
     margin: 0;
 }
 
+h1 {
+    margin-top: 0;
+}
+
+
 .sidebar {
     width: 175px;
     height: 100%;
@@ -30,4 +34,9 @@ body {
     top: 0;
     left: 0;
     background-color: var(--dark-navy);
+    color: white; 
+}
+
+.sidebar a {
+    color: white;
 }

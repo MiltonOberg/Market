@@ -8,6 +8,8 @@ stock_analysis_bp = Blueprint("stock_analysis", __name__, url_prefix="/stock_ana
 @stock_analysis_bp.route("/", methods=["GET", "POST"])
 def stock_analysis():
     stock_pick = "saab"
+    graph = None
+    table_data = None
 
     if request.method == "POST":
         stock_pick = request.form.get("stock-pick", stock_pick)
