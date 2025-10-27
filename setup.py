@@ -13,7 +13,6 @@ setup(
     author_email="miltonwendel@outlook.com",
     install_requires=["pandas", "matplotlib", "ipynb", "python-dotenv", "requests"],
     packages=find_packages(
-        exclude=("explorations", "test"),
         include=["backend", "frontend", "utils", "features"],
     ),
     # entry_points={"console_scripts": ["dashboard = utils.run_dashboard:run_dashboard"]},
