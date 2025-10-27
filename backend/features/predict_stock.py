@@ -8,6 +8,6 @@ class PredictStock:
         self.agent = Agent(self.stock)
         self.agent.train()
 
-    def predict_days(self, days=7):
-        feature_preds = self.agent.predict_future(self.stock, days=days)
+    def predict_days(self, period=7):
+        feature_preds = self.agent.predict_future(self.stock, days=period)
         return feature_preds

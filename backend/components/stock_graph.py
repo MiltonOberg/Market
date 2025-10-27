@@ -1,28 +1,26 @@
 import numpy as np
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 
 from backend.components.stock import Stock
 
 
 class StockGraph:
-    def __init__(self, choice: str):
+    def __init__(self, choice: Stock | np.ndarray | str):
+        self.df = None
         if isinstance(choice, str):
-            self.df = Stock(choice).df
+            self.df = Stock(stock=choice).df
         elif isinstance(choice, Stock):
             self.df = choice.df
         elif isinstance(choice, np.ndarray):
             self.df = pd.DataFrame(choice, columns=["Close"])
 
-    def date_close(self, year: int = None, month: int = None):
-        df_copy = self.df.copy()
-        if year is not None or month is not None:
-            if year is not None:
-                df_copy = self.df[self.df.index.year == year]
-            if month is not None:
-                df_copy = self.df[self.df.index.month == month]
-        else:
-            df_copy = self.df
-
-        fig = px.line(df_copy, x=df_copy.index, y="Close", title="Stonk Closing Prices")
+    def create_graph(self):
+        data = go.Scatter(
+            x=self.df.index.tolist(),
+            y=self.df["Close"].values.tolist(),
+            mode="lines",
+            name="Close Price",
+        )
+        fig = go.Figure(data=data)
         return fig

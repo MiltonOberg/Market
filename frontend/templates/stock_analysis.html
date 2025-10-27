@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block content %}
+
+    <h1>Stock Analysis</h1>
+    <form method = "POST" action="{{ url_for('stock_analysis.stock_analysis') }}">
+
+        <label for="stock-pick">Pick your stock: </label>
+        <input type="text" id="stock-pick" name="stock-pick" value= "{{stock_pick}}" required>
+        <button type="submit">Fetch data</button>
+    </form>
+
+    <hr>
+        <div class="scroll-wrapper" style="height: 200px; overflow-y: scroll;">
+            {{ table_html | safe }}
+        </div>
+    <hr/>
+
+    <div id="plotly-graph"></div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+
+    <script>
+        var graph = {{ json_graph | safe }};
+        Plotly.plot("plotly-graph", graph.data, graph.layout);
+    </script>
+
+{% endblock %}

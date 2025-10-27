@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, inicial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_html.css') }}" />
+
+    <title>Home</title>
+  </head>
+
+  <body>
+    {% include '_sidebar.html' %}
+
+    <main>{% block content %} {% endblock %}</main>
+  </body>
+</html>
