@@ -14,9 +14,9 @@ def stock_analysis():
     if request.method == "POST":
         stock_pick = request.form.get("stock-pick", stock_pick)
 
-    analysis = StockAnalysis(choice=stock_pick)
-    graph = analysis.get_graph()
-    table_data = analysis.get_table()
+        analysis = StockAnalysis(choice=stock_pick)
+        graph = analysis.get_graph()
+        table_data = analysis.get_table()
 
     return render_template(
         "stock_analysis.html",
