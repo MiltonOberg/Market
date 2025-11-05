@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 from backend.components.stock import Stock
+from frontend.style.colors_py import COLORS
 
 
 class StockGraph:
@@ -22,5 +23,13 @@ class StockGraph:
             mode="lines",
             name="Close Price",
         )
+
         fig = go.Figure(data=data)
+        fig.update_layout(
+            title="Stock price over time",
+            paper_bgcolor=COLORS["light_navy"],
+            font=dict(color=COLORS["white"]),
+            xaxis=dict(showgrid=False),
+            yaxis=dict(showgrid=False),
+        )
         return fig

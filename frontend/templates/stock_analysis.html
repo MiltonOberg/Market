@@ -8,6 +8,7 @@
         <button type="submit">Fetch data</button>
     </form>
 
+    {% if table_html %}
     <hr>
         <div class="scroll-wrapper" style="height: 200px; overflow-y: scroll;">
             {{ table_html | safe }}
@@ -22,5 +23,6 @@
         var graph = {{ json_graph | safe }};
         Plotly.plot("plotly-graph", graph.data, graph.layout);
     </script>
+    {% endif %}
 
 {% endblock %}
