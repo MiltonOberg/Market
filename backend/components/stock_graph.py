@@ -29,5 +29,7 @@ class StockGraph:
             title="Stock price over time",
             paper_bgcolor=COLORS["light_navy"],
             font=dict(color=COLORS["white"]),
+            xaxis=dict(showgrid=False),
+            yaxis=dict(showgrid=False),
         )
         return fig
