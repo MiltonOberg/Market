@@ -11,19 +11,23 @@
     
     --yellow: #F2C94C;
 }
+/* Main area */
 main {
     height: 100vh;
     margin-left: 175px;
+    margin-top: 10px;
     background-color: var(--light-navy);
     color: white;
 }
-
 body {
     margin: 0;
 }
-
 h1 {
     margin-top: 0;
+}
+.content-container {
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 /* Sidebar */
@@ -38,6 +42,7 @@ h1 {
 }
 .sidebar h2 {
     font-family: "Arial";
+    margin-left: 20px;
 }
 .sidebar ul {
     list-style: none;
@@ -45,7 +50,6 @@ h1 {
 .sidebar li a {
     text-decoration: none;
 }
-
 .sidebar a {
     color: white;
 }
