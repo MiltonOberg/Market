@@ -11,22 +11,20 @@
     
     --yellow: #F2C94C;
 }
+/* Main area */
 main {
-    height: 100vh;
     margin-left: 175px;
-    background-color: var(--light-navy);
     color: white;
 }
-
 body {
-    margin: 0;
+    background-color: var(--light-navy);
+}
+.title-container {
+    font-family: "Arial";
 }
 
-h1 {
-    margin-top: 0;
-}
 
-
+/* Sidebar */
 .sidebar {
     width: 175px;
     height: 100%;
@@ -34,9 +32,16 @@ h1 {
     top: 0;
     left: 0;
     background-color: var(--dark-navy);
-    color: white; 
+    color: white;
 }
-
-.sidebar a {
+.sidebar h2 {
+    font-family: "Arial";
+    margin-left: 20px;
+}
+.sidebar ul {
+    list-style: none;
+}
+.sidebar li a {
+    text-decoration: none;
     color: white;
 }
