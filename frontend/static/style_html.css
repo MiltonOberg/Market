@@ -13,22 +13,16 @@
 }
 /* Main area */
 main {
-    height: 100vh;
     margin-left: 175px;
-    margin-top: 10px;
-    background-color: var(--light-navy);
     color: white;
 }
 body {
-    margin: 0;
+    background-color: var(--light-navy);
 }
-h1 {
-    margin-top: 0;
+.title-container {
+    font-family: "Arial";
 }
-.content-container {
-    padding-left: 10px;
-    padding-top: 10px;
-}
+
 
 /* Sidebar */
 .sidebar {
@@ -49,7 +43,5 @@ h1 {
 }
 .sidebar li a {
     text-decoration: none;
-}
-.sidebar a {
     color: white;
 }
