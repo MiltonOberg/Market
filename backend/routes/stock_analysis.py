@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 
-from backend.components.stock_analysis import StockAnalysis
+from backend.components.dataprocesser import DataProcesser
 
 stock_analysis_bp = Blueprint("stock_analysis", __name__, url_prefix="/stock_analysis")
 
@@ -14,7 +14,7 @@ def stock_analysis():
     if request.method == "POST":
         stock_pick = request.form.get("stock-pick", stock_pick)
 
-        analysis = StockAnalysis(choice=stock_pick)
+        analysis = DataProcesser(choice=stock_pick)
         graph = analysis.get_graph()
         table_data = analysis.get_table()
 

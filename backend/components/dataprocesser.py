@@ -8,7 +8,7 @@ from backend.components.stock import Stock
 from backend.components.stock_graph import StockGraph
 
 
-class StockAnalysis:
+class DataProcesser:
     def __init__(
         self,
         choice: str = None,
@@ -26,8 +26,13 @@ class StockAnalysis:
 
     def get_table(self):
         df = self.stock.df if self.stock else pd.DataFrame(self.data)
+        alterned_dates = df.index.strftime("%y-%m-%d")
+        display_df = df.copy()
+        display_df.index = alterned_dates
 
-        json_table = df.to_html(classes="table table-striped table-bordered", border=0)
+        json_table = display_df.to_html(
+            classes="table table-striped table-bordered", border=0
+        )
         return json_table
 
     def get_graph(self):
