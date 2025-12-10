@@ -1,5 +1,5 @@
 from backend.components.stock import Stock
-from backend.features.agent import Agent
+from backend.features.models.agent import Agent
 
 
 class PredictStock:

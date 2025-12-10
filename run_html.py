@@ -2,7 +2,7 @@ from flask import Flask
 
 from backend.routes.ai_model_route import ai_model_bp
 from backend.routes.home_route import home_bp
-from backend.routes.stock_analysis_route import stock_analysis_bp
+from backend.routes.stock_analysis import stock_analysis_bp
 from utils.constants import STATIC_DIR, TEMPLATES_DIR
 
 
