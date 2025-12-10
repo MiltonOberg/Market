@@ -1,8 +1,8 @@
 import streamlit as st
 
-from backend.components.stock_analysis import StockAnalysis
+from arc.steamlit.read_css import read_css
+from backend.components.dataprocesser import DataProcesser
 from backend.features.predict_stock import PredictStock
-from frontend.style.read_css import read_css
 from utils.period_options import PERIOD_MAP
 
 
@@ -25,7 +25,7 @@ def main():
             choice = st.text_input("What stonk do you want to analyse?", key="analysis")
 
             if choice and time:
-                stonk_analysis = StockAnalysis(
+                stonk_analysis = DataProcesser(
                     choice=choice, timeframe=PERIOD_MAP[time]
                 )
                 stonk_analysis.show_table()
@@ -39,7 +39,7 @@ def main():
 
             if choice:
                 preds = PredictStock(choice=choice).predict_days(days=days)
-                stock_analysis = StockAnalysis(choice=preds)
+                stock_analysis = DataProcesser(choice=preds)
                 stock_analysis.show_table()
                 stock_analysis.show_graph()
 

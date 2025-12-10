@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 
-from backend.components.stock_analysis import StockAnalysis
+from backend.components.dataprocesser import StockAnalysis
 
 stock_analysis_bp = Blueprint("stock_analysis", __name__, url_prefix="/stock_analysis")
 

@@ -8,7 +8,7 @@ from backend.components.stock import Stock
 from backend.components.stock_graph import StockGraph
 
 
-class StockAnalysis:
+class DataProcesser:
     def __init__(
         self,
         choice: str = None,
