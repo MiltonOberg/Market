@@ -1,9 +1,9 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.layers import Dense, Flatten
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.layers import Dense, Flatten  # type: ignore
+from tensorflow.keras.models import Sequential  # type: ignore
+from tensorflow.keras.optimizers import Adam  # type: ignore
 
 from backend.components.stock import Stock
 
