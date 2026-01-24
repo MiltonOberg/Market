@@ -17,10 +17,17 @@ main {
     color: white;
 }
 body {
+    margin: 0;
     background-color: var(--light-navy);
 }
 .title-container {
     font-family: "Arial";
+    background-color: var(--dark-navy);
+}
+.title-container h1 {
+    margin: 0;
+    padding: 15px;
+    text-align: center;
 }
 
 

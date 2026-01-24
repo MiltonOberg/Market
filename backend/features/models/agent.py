@@ -16,7 +16,7 @@ class Agent:
             stock.df["Close"],
         )
         self.input_shape = self.X.shape[1:]
-        self.learning_rate = 0.001
+        self.learning_rate = 0.00025
         self.model = self._create_model()
         self.train_data = None
         self.test_data = None
@@ -30,8 +30,8 @@ class Agent:
     def _create_model(self):
         model = Sequential()
         model.add(Flatten(input_shape=self.input_shape))
-        model.add(Dense(64, activation="relu"))
-        model.add(Dense(64, activation="relu"))
+        model.add(Dense(128, activation="relu"))
+        model.add(Dense(128, activation="relu"))
         model.add(Dense(1, activation="linear"))
 
         model.compile(loss="mse", optimizer=Adam(learning_rate=self.learning_rate))
