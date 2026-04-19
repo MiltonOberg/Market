@@ -24,3 +24,14 @@ class Stock:
             return data.history(period=self.timeframe, interval=self.interval)
         except Exception as e:
             raise ValueError(f"Error fetching data for {stock}: {e}")
+
+    def get_return_data(self):
+        df = self.df.copy()
+        df["Return"] = df["Close"].pct_change()
+        df.dropna(inplace=True)
+        return df
+
+
+if __name__ == "__main__":
+    stock = Stock("saab")
+    print(stock.get_return_data())
