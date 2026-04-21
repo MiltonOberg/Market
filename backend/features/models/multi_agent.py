@@ -1,12 +1,13 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.layers import LSTM, Dense  # type: ignore
-from tensorflow.keras.models import Sequential  # type: ignore
+from tensorflow.keras.layers import LSTM, Dense, Input  # type: ignore
+from tensorflow.keras.models import Sequential, load_model  # type: ignore
 from tensorflow.keras.optimizers import Adam  # type: ignore
 
 from backend.components.stock import Stock
 from backend.features.models.agent import Agent
+from utils.constants import MULTI_WEIGHTS_DIR, WEIGHTS_DIR
 from utils.stock_list import SWEDISH_STOCKS
 
 
@@ -35,11 +36,8 @@ class MultiAgent(Agent):
 
     def _create_model(self):
         model = Sequential()
-        model.add(
-            LSTM(
-                128, input_shape=(self.LOOKBACK, self.X.shape[1]), return_sequences=True
-            )
-        )
+        model.add(Input(shape=(self.LOOKBACK, self.X.shape[1])))
+        model.add(LSTM(128, return_sequences=True))
         model.add(LSTM(64))
         model.add(Dense(1, activation="linear"))
 
@@ -74,6 +72,9 @@ class MultiAgent(Agent):
         X_train, X_test, y_train, y_test = train_test_split(
             X_total, y_total, test_size=0.2, shuffle=True
         )
+        self.train_data = (X_train, y_train)
+        self.test_data = (X_test, y_test)
+
         history = self.model.fit(
             X_train,
             y_train,
@@ -83,20 +84,48 @@ class MultiAgent(Agent):
         )
         return history
 
+    def evaluate_direction(
+        self,
+    ):
+        ypred = self.model.predict(self.test_data[0], verbose=0)
+
+        correct = sum(
+            1
+            for pred, actual in zip(ypred, self.test_data[1])
+            if (pred < 0 and actual < 0) or (pred > 0 and actual > 0)
+        )
+        accuracy = correct / len(self.test_data[1]) * 100
+        return accuracy
+
     def predict_future(self, stock_list: list):
         predictions = []
         for ticker in stock_list:
-            stock = Stock(ticker)
-            df = stock.get_return_data()
-            X = df.drop(columns=["Close", "Dividends", "Stock Splits", "Return"])
+            try:
+                stock = Stock(ticker)
+                df = stock.get_return_data()
+                X = df.drop(columns=["Close", "Dividends", "Stock Splits", "Return"])
 
-            last_60_days = X.iloc[-self.LOOKBACK :].values
-            last_60_scaled = self.standard_scaler.transform(last_60_days)
+                last_60_days = X.iloc[-self.LOOKBACK :].values
+                last_60_scaled = self.standard_scaler.transform(last_60_days)
 
-            input_seq = last_60_scaled.reshape(1, self.LOOKBACK, -1)
-            prediction = self.model.predict(input_seq, verbose=0)
-            predictions.append(prediction)
+                input_seq = last_60_scaled.reshape(1, self.LOOKBACK, -1)
+                prediction = self.model.predict(input_seq, verbose=0)
+                predictions.append({"ticker": ticker, "predicted_return": prediction})
+            except Exception as e:
+                print(f"Skipping {ticker}, not found: {e}")
         return predictions
+
+    def save_weights(
+        self,
+    ):
+        WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
+        self.model.save(MULTI_WEIGHTS_DIR)
+        print("Weights saved")
+
+    def load_weights(
+        self,
+    ):
+        self.model = load_model(MULTI_WEIGHTS_DIR)
 
 
 if __name__ == "__main__":
