@@ -27,7 +27,7 @@ class MultiAgent(Agent):
         self.test_data = None
         self.standard_scaler = StandardScaler()
 
-    def _create_sequense(self, X, y):
+    def _create_sequense(self, X: np.array, y: np.array):
         X_seq, y_seq = [], []
         for i in range(self.LOOKBACK, len(X)):
             X_seq.append(X[i - self.LOOKBACK : i])
@@ -58,8 +58,9 @@ class MultiAgent(Agent):
                     ),
                     df_return["Return"],
                 )
-                X_scaled = self.standard_scaler.fit_transform(X)
-                X_seq, y_seq = self._create_sequense(X_scaled, y)
+                X_scaled = np.array(self.standard_scaler.fit_transform(X))
+                y_array = np.array(y)
+                X_seq, y_seq = self._create_sequense(X_scaled, y_array)
 
                 all_X_seq.append(X_seq)
                 all_y_seq.append(y_seq)
