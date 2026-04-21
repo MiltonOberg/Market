@@ -20,10 +20,6 @@ class Agent:
         self.model = self._create_model()
         self.train_data = None
         self.test_data = None
-        self.X_train = None
-        self.y_train = None
-        self.X_test = None
-        self.y_test = None
 
         self.standard_scaler = StandardScaler()
 
@@ -38,13 +34,13 @@ class Agent:
         return model
 
     def scaler(self, X, y):
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+        X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, shuffle=False
         )
-        X_train_scaled = self.standard_scaler.fit_transform(self.X_train)
-        X_test_scaled = self.standard_scaler.transform(self.X_test)
-        self.train_data = (X_train_scaled, self.y_train)
-        self.test_data = (X_test_scaled, self.y_test)
+        X_train_scaled = self.standard_scaler.fit_transform(X_train)
+        X_test_scaled = self.standard_scaler.transform(X_test)
+        self.train_data = (X_train_scaled, y_train)
+        self.test_data = (X_test_scaled, y_test)
 
     def train(self):
         self.scaler(self.X, self.y)

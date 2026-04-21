@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.layers import LSTM, Dense  # type: ignore
 from tensorflow.keras.models import Sequential  # type: ignore
@@ -6,10 +7,11 @@ from tensorflow.keras.optimizers import Adam  # type: ignore
 
 from backend.components.stock import Stock
 from backend.features.models.agent import Agent
+from utils.stock_list import SWEDISH_STOCKS
 
 
 class MultiAgent(Agent):
-    def __init__(self, stock: Stock):
+    def __init__(self, stock: Stock, lookback: int = 60):
         """Does not take Dividens and Stock Splits into account for now."""
         df_return = stock.get_return_data()
         self.X, self.y = (
@@ -18,29 +20,24 @@ class MultiAgent(Agent):
         )
         self.input_shape = self.X.shape[1:]
         self.learning_rate = 0.00025
+        self.LOOKBACK = lookback
         self.model = self._create_model()
         self.train_data = None
         self.test_data = None
-        self.X_train = None
-        self.y_train = None
-        self.X_test = None
-        self.y_test = None
         self.standard_scaler = StandardScaler()
 
-        self.LOOKBACK = 60
-
-    def _create_sequense(self):
+    def _create_sequense(self, X, y):
         X_seq, y_seq = [], []
-        for i in range(self.LOOKBACK, len(self.X)):
-            X_seq.append(self.X.iloc[i - self.LOOKBACK : i].values)
-            y_seq.append(self.y.iloc[i])
+        for i in range(self.LOOKBACK, len(X)):
+            X_seq.append(X[i - self.LOOKBACK : i])
+            y_seq.append(y[i])
         return np.array(X_seq), np.array(y_seq)
 
     def _create_model(self):
         model = Sequential()
         model.add(
             LSTM(
-                128, input_shape=(self.LOOKBACK, self.X.shape(1)), return_sequences=True
+                128, input_shape=(self.LOOKBACK, self.X.shape[1]), return_sequences=True
             )
         )
         model.add(LSTM(64))
@@ -49,14 +46,62 @@ class MultiAgent(Agent):
         model.compile(loss="mse", optimizer=Adam(learning_rate=self.learning_rate))
         return model
 
-    def predict_future(
-        self,
-    ):
-        latest_day = self.X.iloc[-1].values.reshape(1, -1)
-        return latest_day
+    def train_on_multiple(self, stock_list: list, epochs: int = 10):
+        all_X_seq = []
+        all_y_seq = []
+
+        for ticker in stock_list:
+            try:
+                stock = Stock(ticker)
+                df_return = stock.get_return_data()
+                X, y = (
+                    df_return.drop(
+                        columns=["Close", "Dividends", "Stock Splits", "Return"]
+                    ),
+                    df_return["Return"],
+                )
+                X_scaled = self.standard_scaler.fit_transform(X)
+                X_seq, y_seq = self._create_sequense(X_scaled, y)
+
+                all_X_seq.append(X_seq)
+                all_y_seq.append(y_seq)
+            except Exception as e:
+                print(f"Skipping {ticker}, not found: {e}")
+
+        X_total = np.concatenate(all_X_seq)
+        y_total = np.concatenate(all_y_seq)
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            X_total, y_total, test_size=0.2, shuffle=True
+        )
+        history = self.model.fit(
+            X_train,
+            y_train,
+            validation_data=(X_test, y_test),
+            epochs=epochs,
+            batch_size=32,
+        )
+        return history
+
+    def predict_future(self, stock_list: list):
+        predictions = []
+        for ticker in stock_list:
+            stock = Stock(ticker)
+            df = stock.get_return_data()
+            X = df.drop(columns=["Close", "Dividends", "Stock Splits", "Return"])
+
+            last_60_days = X.iloc[-self.LOOKBACK :].values
+            last_60_scaled = self.standard_scaler.transform(last_60_days)
+
+            input_seq = last_60_scaled.reshape(1, self.LOOKBACK, -1)
+            prediction = self.model.predict(input_seq, verbose=0)
+            predictions.append(prediction)
+        return predictions
 
 
 if __name__ == "__main__":
     stock = Stock("saab")
     agent = MultiAgent(stock)
-    agent.train()
+
+    history = agent.train_on_multiple(SWEDISH_STOCKS)
+    predictions = agent.predict_future(SWEDISH_STOCKS)
