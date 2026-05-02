@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.layers import LSTM, Dense, Input  # type: ignore
 from tensorflow.keras.models import Sequential, load_model  # type: ignore
 from tensorflow.keras.optimizers import Adam  # type: ignore
@@ -20,7 +21,7 @@ class MultiAgent(Agent):
             df_return["Return"],
         )
         self.input_shape = self.X.shape[1:]
-        self.learning_rate = 0.00025
+        self.learning_rate = 0.0001
         self.LOOKBACK = lookback
         self.model = self._create_model()
         self.train_data = None
@@ -44,7 +45,9 @@ class MultiAgent(Agent):
         model.compile(loss="mse", optimizer=Adam(learning_rate=self.learning_rate))
         return model
 
-    def train_on_multiple(self, stock_list: list, epochs: int = 10):
+    def train_on_multiple(
+        self, stock_list: list, epochs: int = 50, early_stop: int = 10
+    ):
         all_X_seq = []
         all_y_seq = []
 
@@ -75,6 +78,9 @@ class MultiAgent(Agent):
         )
         self.train_data = (X_train, y_train)
         self.test_data = (X_test, y_test)
+        early_stop = EarlyStopping(
+            monitor="val_loss", patience=early_stop, restore_best_weights=True
+        )
 
         history = self.model.fit(
             X_train,
@@ -82,6 +88,7 @@ class MultiAgent(Agent):
             validation_data=(X_test, y_test),
             epochs=epochs,
             batch_size=32,
+            callbacks=[early_stop],
         )
         return history
 
@@ -111,7 +118,9 @@ class MultiAgent(Agent):
 
                 input_seq = last_60_scaled.reshape(1, self.LOOKBACK, -1)
                 prediction = self.model.predict(input_seq, verbose=0)
-                predictions.append({"ticker": ticker, "predicted_return": prediction})
+                predictions.append(
+                    {"ticker": ticker, "predicted_return": prediction[0][0]}
+                )
             except Exception as e:
                 print(f"Skipping {ticker}, not found: {e}")
         return predictions
